@@ -1,5 +1,6 @@
 package wali.co.nboot.controllers.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -9,48 +10,48 @@ import java.util.List;
 @CrossOrigin(origins = "http://192.168.1.235:4200")
 @RestController
 public class StudentController {
-    private List<Student> studentList = new ArrayList<>();
+    public final StudentService studentService;
 
-    public StudentController() {
-        studentList.add(new Student(1, "Jamal Khan", 12));
-        studentList.add(new Student(2, "Amin Khan", 22));
-        studentList.add(new Student(3, "Alex Murphy", 12));
-        studentList.add(new Student(4, "Wali Abdullah", 14));
-        studentList.add(new Student(4, "Abdullah Wafi", 14));
+    // here @Autowired is a Dependency Injection that Inject StudentService Object into StudentController..
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-
-    @GetMapping("all")
+    @GetMapping("findAll")
     public List findAll() {
-        System.out.println("findOne: "+findOne("Wali Abdullah"));
-        System.out.println("findTextContains: "+findTextContains("Abdullah"));
-        //delete(3); // to delete Alex
-        return studentList;
+        System.out.println(findOne("Wali Abdullah"));
+        return studentService.getAllStrudent();
     }
 
 
-    public Student findOne(String name){
-        for (Student x : studentList) {
-            if (x.getName().equals(name)){
+    @GetMapping("findOne")
+    public Student findOne(@RequestParam("lname") String name) {
+        for (Student x : studentService.getAllStrudent()) {
+            if (x.getName().equals(name)) {
                 return x;
-            };
+            }
+            ;
         }
-            return null;
+        return null;
     }
 
-    public List<Student> findTextContains(String name){
+    @GetMapping("match")
+    public List<Student> findTextContains(@RequestParam("lname") String name) {
         List<Student> dt = new ArrayList<>();
-        for (Student x : studentList) {
-            if (x.getName().contains(name)){
+        for (Student x : studentService.getAllStrudent()) {
+            if (x.getName().contains(name)) {
                 dt.add(x);
-            };
+            }
+            ;
         }
-            return dt;
+        return dt;
     }
 
-    @DeleteMapping
-    public void delete(int id) {
-        studentList.removeIf(student -> student.getId() == id);
+    @DeleteMapping("del")
+    public void delete(@RequestParam("id") int id) {
+        studentService.getAllStrudent().removeIf(student -> student.getId() == id);
+        System.out.println(studentService.getAllStrudent());
     }
 
 }

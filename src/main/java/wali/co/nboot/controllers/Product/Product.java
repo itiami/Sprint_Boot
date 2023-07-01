@@ -19,7 +19,8 @@ public class Product {
     }
 
 
-    public Product(String prodName, String prodType, String prodOrigin, int prodFfabYr) {
+    public Product(int id, String prodName, String prodType, String prodOrigin, int prodFfabYr) {
+        this.id = id;
         this.prodName = prodName;
         this.prodType = prodType;
         this.prodOrigin = prodOrigin;
