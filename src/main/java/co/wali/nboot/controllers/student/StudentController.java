@@ -1,7 +1,8 @@
-package wali.co.nboot.controllers.student;
+package co.wali.nboot.controllers.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class StudentController {
     @GetMapping("findOne")
     public Student findOne(@RequestParam("lname") String name) {
         for (Student x : studentService.getAllStrudent()) {
-            if (x.getName().equals(name)) {
+            if (x.getLname().equals(name)) {
                 return x;
             }
             ;
@@ -40,17 +41,17 @@ public class StudentController {
     public List<Student> findTextContains(@RequestParam("lname") String name) {
         List<Student> dt = new ArrayList<>();
         for (Student x : studentService.getAllStrudent()) {
-            if (x.getName().contains(name)) {
+            if (x.getLname().contains(name)) {
                 dt.add(x);
             }
-            ;
+
         }
         return dt;
     }
 
     @DeleteMapping("del")
     public void delete(@RequestParam("id") int id) {
-        studentService.getAllStrudent().removeIf(student -> student.getId() == id);
+        studentService.getAllStrudent().removeIf(student -> student.getRollId() == id);
         System.out.println(studentService.getAllStrudent());
     }
 

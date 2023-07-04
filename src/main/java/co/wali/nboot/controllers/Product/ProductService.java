@@ -1,4 +1,4 @@
-package wali.co.nboot.controllers.Product;
+package co.wali.nboot.controllers.Product;
 
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package wali.co.nboot.controllers.welcome;
+package co.wali.nboot.controllers.welcome;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

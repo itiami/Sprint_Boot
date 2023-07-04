@@ -1,4 +1,4 @@
-package wali.co.nboot.controllers.Product;
+package co.wali.nboot.controllers.Product;
 
 import org.springframework.web.bind.annotation.*;
 

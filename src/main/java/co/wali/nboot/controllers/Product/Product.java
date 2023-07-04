@@ -1,4 +1,4 @@
-package wali.co.nboot.controllers.Product;
+package co.wali.nboot.controllers.Product;
 
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.context.annotation.Primary;
