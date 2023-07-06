@@ -18,11 +18,11 @@ public class Student {
     private String fname;
     private String lname;
     private LocalDate dob;
-
     @Transient
     private Integer age;
     private String cls_grade;
     private String cls_section;
+    private String email;
 
 
     public Student() {
@@ -36,6 +36,18 @@ public class Student {
         this.dob = dob;
         this.cls_grade = cls_grade;
         this.cls_section = cls_section;
+    }
+
+    public Student(Long id, int rollId, String fname, String lname, LocalDate dob, Integer age, String cls_grade, String cls_section, String email) {
+        this.id = id;
+        this.rollId = rollId;
+        this.fname = fname;
+        this.lname = lname;
+        this.dob = dob;
+        this.age = age;
+        this.cls_grade = cls_grade;
+        this.cls_section = cls_section;
+        this.email = email;
     }
 
     public Long getId() {
@@ -78,7 +90,6 @@ public class Student {
         this.dob = dob;
     }
 
-
     public Integer getAge() {
         return Period.between(this.dob, LocalDate.now()).getYears();
     }
@@ -101,6 +112,15 @@ public class Student {
     public void setCls_section(String cls_section) {
         this.cls_section = cls_section;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String dateFormat(Date date){
         SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
         return DateFor.format(date);

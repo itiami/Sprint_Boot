@@ -1,6 +1,7 @@
 package co.wali.nboot.controllers.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -22,17 +23,31 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student addStudent(Student student){
-        return studentRepository.save(student);
-    }
-
     public List<Student> getAllStudent() {
-        return studentRepository.findAll();
+        return studentRepository.findAll(Sort.by("lname"));
+    }
+
+    public String getEmail(Student student) {
+        return student.getEmail();
     }
 
 
-    public void deleteStd(Long id){
-            studentRepository.deleteById(id);
+    public void addStudent(Student student) {
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+        if (studentOptional.isPresent()) {
+            throw new IllegalStateException("Email has Taken");
+        }else {
+            studentRepository.save(student);
+            System.out.println(student);
+        }
+    }
+
+    public void deleteStd(Long id) {
+        studentRepository.deleteById(id);
+    }
+
+    public Optional<Student> findById(Long id) {
+        return studentRepository.findById(id);
     }
 
 

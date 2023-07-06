@@ -20,8 +20,8 @@ public class StudentController {
     }
 
     @PostMapping("add")
-    public Student addStudent(Student student) {
-        return studentService.addStudent(student);
+    public void addStudent(@RequestBody Student student) {
+        studentService.addStudent(student);
     }
 
     @GetMapping("findAll")
@@ -36,9 +36,14 @@ public class StudentController {
             if (x.getLname().equals(name)) {
                 return x;
             }
-            ;
         }
         return null;
+    }
+
+    // http://192.168.1.235:99/api/student/id?id=103
+    @GetMapping("id")
+    public Student findById(@RequestParam("id") Long id) {
+        return studentService.findById(id).get();
     }
 
     @GetMapping("match")
@@ -48,7 +53,6 @@ public class StudentController {
             if (x.getLname().contains(name)) {
                 dt.add(x);
             }
-
         }
         return dt;
     }
@@ -56,11 +60,10 @@ public class StudentController {
     @DeleteMapping("del")
     public void delete(@RequestParam("id") Long id) {
         for (Student std : studentService.getAllStudent()) {
-            if (id.equals(std.getId())){
+            if (id.equals(std.getId())) {
                 studentService.deleteStd(id);
             }
         }
-
     }
 
 }
