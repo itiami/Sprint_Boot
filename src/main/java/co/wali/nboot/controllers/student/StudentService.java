@@ -35,8 +35,5 @@ public class StudentService {
             studentRepository.deleteById(id);
     }
 
-    public String dateFormat(Date date){
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
-        return DateFor.format(date);
-    }
+
 }

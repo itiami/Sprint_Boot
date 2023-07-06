@@ -2,6 +2,11 @@ package co.wali.nboot.controllers.student;
 
 import jakarta.persistence.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
+
 @Entity
 @Table
 public class Student {
@@ -12,7 +17,10 @@ public class Student {
     private int rollId;
     private String fname;
     private String lname;
-    private String dob;
+    private LocalDate dob;
+
+    @Transient
+    private Integer age;
     private String cls_grade;
     private String cls_section;
 
@@ -20,7 +28,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int rollId, String fname, String lname, String dob, String cls_grade, String cls_section) {
+    public Student(int rollId, String fname, String lname, LocalDate dob, String cls_grade, String cls_section) {
         super();
         this.rollId = rollId;
         this.fname = fname;
@@ -62,14 +70,22 @@ public class Student {
         this.lname = lname;
     }
 
-    public String getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
+
+    public Integer getAge() {
+        return Period.between(this.dob, LocalDate.now()).getYears();
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
     public String getCls_grade() {
         return cls_grade;
     }
@@ -84,5 +100,9 @@ public class Student {
 
     public void setCls_section(String cls_section) {
         this.cls_section = cls_section;
+    }
+    public String dateFormat(Date date){
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+        return DateFor.format(date);
     }
 }

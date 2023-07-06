@@ -26,7 +26,6 @@ public class StudentController {
 
     @GetMapping("findAll")
     public List findAll() {
-        System.out.println(findOne("Wali Abdullah"));
         return studentService.getAllStudent();
     }
 
