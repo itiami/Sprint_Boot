@@ -5,30 +5,6 @@ server:
 # Spring Configuration
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    username: numan
-    password: 2204
-    hikari:
-      schema: sch_site1
-    url: jdbc:postgresql://localhost:5432/ndb
-
-  # Hibernate Configuration
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-
-
-# this 3 dash is use to seperate the spring block
----
-# Spring Configuration
-spring:
-  datasource:
     username: root
     password: 2204
     url: jdbc:mariadb://localhost:6603/nDB
@@ -44,3 +20,29 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
+
+# this 3 dash is use to seperate the spring block
+---
+# Spring Configuration
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: numan
+    password: 2204
+    hikari:
+      schema: sch_user
+    url: jdbc:postgresql://localhost:5432/nDB
+
+  # Hibernate Configuration
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+
+
