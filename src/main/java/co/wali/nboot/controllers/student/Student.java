@@ -14,7 +14,7 @@ public class Student {
     @SequenceGenerator(name = "student_id_sequence", sequenceName = "student_id_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_id_sequence")
     private Long id;
-    private int rollId;
+    private Integer rollId;
     private String fname;
     private String lname;
     private LocalDate dob;
@@ -28,7 +28,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int rollId, String fname, String lname, LocalDate dob, String cls_grade, String cls_section) {
+    public Student(Integer rollId, String fname, String lname, LocalDate dob, String cls_grade, String cls_section) {
         super();
         this.rollId = rollId;
         this.fname = fname;
@@ -38,7 +38,7 @@ public class Student {
         this.cls_section = cls_section;
     }
 
-    public Student(Long id, int rollId, String fname, String lname, LocalDate dob, Integer age, String cls_grade, String cls_section, String email) {
+    public Student(Long id, Integer rollId, String fname, String lname, LocalDate dob, Integer age, String cls_grade, String cls_section, String email) {
         this.id = id;
         this.rollId = rollId;
         this.fname = fname;
@@ -58,11 +58,11 @@ public class Student {
         this.id = id;
     }
 
-    public int getRollId() {
+    public Integer getRollId() {
         return rollId;
     }
 
-    public void setRollId(int rollId) {
+    public void setRollId(Integer rollId) {
         this.rollId = rollId;
     }
 

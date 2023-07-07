@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,4 +67,41 @@ public class StudentController {
         }
     }
 
+    // Update using @RequestParam..
+    // to call in url will be..
+    //http://192.168.1.235:99/api/student/553?rollId=512221&fname=A Wali
+    @PutMapping(path = "{id}")
+    public void update(@PathVariable("id") Long id,
+                       @RequestParam(required = false) Integer rollId,
+                       @RequestParam(required = false) String fname,
+                       @RequestParam(required = false) String lname,
+                       @RequestParam(required = false) LocalDate dob,
+                       @RequestParam(required = false) String cls_grade,
+                       @RequestParam(required = false) String cls_section,
+                       @RequestParam(required = false) String email) {
+        studentService.updateStudent(id, rollId, fname, lname, dob,
+                cls_grade, cls_section, email);
+    }
+
+    // Update using @RequestBody..
+
+    // but if want to create Json format to update we needs to call @RequestBody()
+    @PutMapping("update/{stdId}")
+    public void updateEntiy(@PathVariable Long stdId ,@RequestBody Student student) {
+        studentService.saveOrUpdate(stdId, student);
+    }
+
+    /*
+    to call this method the RequestBody will be the complete means all fields ass of Student Constructor
+        {
+            "id": 53,
+            "rollId": 51117,
+            "fname": "Saif Ali",
+            "lname": "Khan",
+            "cls_grade": "6eme",
+            "cls_section": "B",
+            "email": "saifAli@email.com",
+            "dob": "2008-05-14"
+        }
+    */
 }
