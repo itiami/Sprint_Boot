@@ -101,7 +101,9 @@ public class StudentService {
         5. as the existsStudent is an Instance of Student class. we can user setter to set the value sent by Browser i.g. in step 2.
         6. and at the end the existsStudent Instance will be save. means we are creating a constructor with value from Student class.
             and the values are comming from step 2.
-
+        7. apart from Above................. all the if conditions are use for data validation..
+            e.g. setter will call if example rollId is not null and grater then 0 and if not Exits..
+                else rollId will not change..
     */
 
     public void saveOrUpdate(Long id, Student student) {
