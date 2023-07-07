@@ -87,7 +87,8 @@ public class StudentController {
 
     // but if want to create Json format to update we needs to call @RequestBody()
     @PutMapping("update/{stdId}")
-    public void updateEntiy(@PathVariable Long stdId ,@RequestBody Student student) {
+    public void updateEntiy(@PathVariable Long stdId,
+                            @RequestBody Student student) {
         studentService.saveOrUpdate(stdId, student);
     }
 
