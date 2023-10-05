@@ -1,34 +1,40 @@
-package co.wali.nboot.controllers.student;
+package co.wali.nboot.modules.student;
 
-import jakarta.persistence.Transient;
+
+import co.wali.nboot.modules.address.Address;
+import co.wali.nboot.modules.address.AddressRepository;
+import co.wali.nboot.modules.address.AddressService;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
 @Component
 public class StudentService {
-    private StudentRepository studentRepository;
-    private final List<Student> studentList = new ArrayList<>();
+    List<Student> studentList = new ArrayList<>();
+    private final StudentRepository studentRepository;
+    private final AddressService addressService;
+    /*@Autowired
+    public StudentService(StudentRepository studentRepository) {
+        //studentList.add(new Student(51100, "wali", "abdullah", LocalDate.of(2023,4,23),"5eme","A","email.mail.com", List.of(new PhoneNumber("2154545"))));
+        this.studentRepository = studentRepository;
+    }*/
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
-        /*studentList.add(new Student(51051, "Jamal","Miah", dateFormat(new Date(2012,02,25)), "3eme", "A"));
-        studentList.add(new Student(51052, "Nasim","Ali", dateFormat(new Date(2012,02,25)), "5eme", "A"));
-        studentList.add(new Student(51053, "Jamal","Khan", dateFormat(new Date(2012,02,25)), "5eme", "A"));
-        studentList.add(new Student(51054, "Nasim","Khan", dateFormat(new Date(2012,02,25)), "3eme", "A"));
-        studentList.add(new Student(51055, "Amin","Miah", dateFormat(new Date(2012,02,25)), "2nd", "A"));
-        studentList.add(new Student(51056, "Haydar","Khan", dateFormat(new Date(2012,02,25)), "6eme", "A"));*/
+    public StudentService(StudentRepository studentRepository, AddressService addressService) {
+        //studentList.add(new Student(51100, "wali", "abdullah", LocalDate.of(2023,4,23),"5eme","A","email.mail.com", List.of(new PhoneNumber("2154545"))));
         this.studentRepository = studentRepository;
+        this.addressService = addressService;
     }
 
-    public List<Student> getAllStudent() {
+    public List<Student> findAll() {
         return studentRepository.findAll(Sort.by("lname"));
     }
+
 
     public String getEmail(Student student) {
         return student.getEmail();
@@ -40,14 +46,15 @@ public class StudentService {
         if (studentOptional.isPresent()) {
             throw new IllegalStateException("Email has Taken");
         } else {
-            studentRepository.save(student);
-            System.out.println(student);
+            studentRepository.saveAndFlush(student);
+            //System.out.println(student);
         }
     }
 
-    public void deleteStd(Long id) {
+    public void deleteById(Long id) {
         studentRepository.deleteById(id);
     }
+
 
     public Optional<Student> findById(Long id) {
         return studentRepository.findById(id);
@@ -55,7 +62,7 @@ public class StudentService {
 
 
     @Transactional
-    public void updateStudent(Long id, Integer rollId, String fname, String lname, LocalDate dob,
+    public void updateStudent(Long id, Integer rollId, String fname, String lname, Date dob,
                               String cls_grade, String cls_section, String email) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalStateException(
                 "Student With ID: " + id + " does not exists"
@@ -71,7 +78,7 @@ public class StudentService {
         if (lname != null && lname.length() > 0 && !Objects.equals(student.getLname(), lname)) {
             student.setLname(lname);
         }
-        if (dob != null && !dob.isEqual(student.getDob())) {
+        if (dob != null && dob != student.getDob()) {
             student.setDob(dob);
         }
 
@@ -131,7 +138,7 @@ public class StudentService {
                 !Objects.equals(student.getLname(), existsId.getLname())) {
             existsStudent.setLname(student.getLname());
         }
-        if (student.getDob() != null && !student.getDob().isEqual(existsId.getDob())) {
+        if (student.getDob() != null && student.getDob() != existsId.getDob()) {
             existsStudent.setDob(student.getDob());
         }
 
