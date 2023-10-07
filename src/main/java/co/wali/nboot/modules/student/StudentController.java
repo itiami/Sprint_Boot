@@ -1,4 +1,4 @@
-package co.wali.nboot.controllers.student;
+package co.wali.nboot.modules.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/api/student")
@@ -26,14 +27,14 @@ public class StudentController {
     }
 
     @GetMapping("findAll")
-    public List findAll() {
-        return studentService.getAllStudent();
+    public List<Student> findAll() {
+        return studentService.findAll();
     }
 
 
     @GetMapping("findOne")
     public Student findOne(@RequestParam("lname") String name) {
-        for (Student x : studentService.getAllStudent()) {
+        for (Student x : studentService.findAll()) {
             if (x.getLname().equals(name)) {
                 return x;
             }
@@ -50,7 +51,7 @@ public class StudentController {
     @GetMapping("match")
     public List<Student> findTextContains(@RequestParam("lname") String name) {
         List<Student> dt = new ArrayList<>();
-        for (Student x : studentService.getAllStudent()) {
+        for (Student x : studentService.findAll()) {
             if (x.getLname().contains(name)) {
                 dt.add(x);
             }
@@ -58,14 +59,16 @@ public class StudentController {
         return dt;
     }
 
-    @DeleteMapping("del")
+    @DeleteMapping("id")
     public void delete(@RequestParam("id") Long id) {
-        for (Student std : studentService.getAllStudent()) {
+        for (Student std : studentService.findAll()) {
             if (id.equals(std.getId())) {
-                studentService.deleteStd(id);
+                studentService.deleteById(id);
             }
         }
     }
+
+
 
     // Update using @RequestParam..
     // to call in url will be..
@@ -75,7 +78,7 @@ public class StudentController {
                        @RequestParam(required = false) Integer rollId,
                        @RequestParam(required = false) String fname,
                        @RequestParam(required = false) String lname,
-                       @RequestParam(required = false) LocalDate dob,
+                       @RequestParam(required = false) Date dob,
                        @RequestParam(required = false) String cls_grade,
                        @RequestParam(required = false) String cls_section,
                        @RequestParam(required = false) String email) {
